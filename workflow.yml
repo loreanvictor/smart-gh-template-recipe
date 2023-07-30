@@ -1,0 +1,46 @@
+# .github/workflows/init.yml
+name: Initialize Template
+
+#
+# Run this on creation of a branch or ref
+#
+on:
+  push:
+    branches: main
+
+jobs:
+  build:
+    #
+    # Check if this is not a commit to the template repository
+    #
+    if: github.repository != '{{ tmplr.repo_owner }}/{{ tmplr.repo_name }}'
+
+    runs-on: ubuntu-latest
+    steps:
+      #
+      # Checkout the code
+      #
+      - uses: actions/checkout@v2
+
+      
+      #
+      # Run tmplr with required environment variables,
+      # and remove the template recipe afterwards.
+      #
+      # If you want from GitHub Action contexts, add them here
+      # and set them as environment variables for tmplr.
+      #
+      - name: Apply template
+        run: npx tmplr && rm -fr .tmplr.yml && rm -fr .github/workflows/init.yml
+        env:
+          owner_name: ${{ github.event.repository.owner.name }}
+          owner_email: ${{ github.event.repository.owner.email }}
+          repo_name: ${{ github.event.repository.name }}
+          repo_url: ${{ github.event.repository.ssh_url }}
+
+      #
+      # Commit the code
+      #
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: Initialize from template

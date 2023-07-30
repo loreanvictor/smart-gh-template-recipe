@@ -1,0 +1,16 @@
+steps:
+  - read: repo_owner
+    from: git.remote_owner
+    fallback:
+      prompt: What is your GitHub username?
+  
+  - read: repo_name
+    from: git.remote_name
+    fallback:
+      prompt: What is the name of your template repository?
+      default:
+        from: filesystem.scopedir
+
+  - copy: workflow.yml
+    to:
+      path: '{{ filesystem.scope }}/.github/workflows/init.yml'
