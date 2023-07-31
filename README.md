@@ -62,4 +62,22 @@ jobs:
     # ...
 ```
 
+<br>
+
+Note that [tmplr contextual values](https://github.com/loreanvictor/tmplr#contextual-values) are still available for your recipe,
+specifically [git context](https://github.com/loreanvictor/tmplr#git-context) is accessible, which might be easier to use, rather than
+Github Actions context.
+
+```yaml
+# .tmplr.yml
+steps:
+  - read: owner_name
+    from: git.repo_owner
+
+  - read: owner_email
+    from: git.author_email
+
+  # ...
+```
+
 <br><br>
