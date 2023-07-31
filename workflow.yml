@@ -16,6 +16,8 @@ jobs:
     if: github.repository != '{{ tmplr.repo_owner }}/{{ tmplr.repo_name }}'
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       #
       # Checkout the code
